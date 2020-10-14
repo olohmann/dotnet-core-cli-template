@@ -38,12 +38,11 @@ namespace DotNetCliTemplate
                 .WriteTo.Console() // Always write to console.
                 .CreateLogger();
 
-
             // Support CTRL-C
             using var cancellationTokenSource = new CancellationTokenSource();
-            Console.CancelKeyPress += (sender, args) =>
+            Console.CancelKeyPress += (sender, arguments) =>
             {
-                args.Cancel = true;
+                arguments.Cancel = true;
 
                 // ReSharper disable once AccessToDisposedClosure | endless loop follows.
                 cancellationTokenSource.Cancel();
@@ -66,7 +65,7 @@ namespace DotNetCliTemplate
             }
             catch (TaskCanceledException)
             {
-                Console.WriteLine("Cancelled by user.");
+                Log.Warning("Cancelled by user.");
                 return 1;
             }
             catch (Exception exception)
